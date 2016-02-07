@@ -26,7 +26,6 @@ for citation in re.finditer(scraper, text):
 		biblio.append(note + "  ")
 
 biblio.sort(key=lambda x: x.strip("\'").lower())
-print "\n".join(biblio)
 
 with open(str(sys.argv[2]),"w") as output:
 	output.write("\n".join(biblio))
