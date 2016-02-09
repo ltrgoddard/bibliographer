@@ -6,5 +6,5 @@ A Python script to scrape MHRA-style citations from Markdown documents and turn 
 
 ## To do
 
+* Remove stray parentheses and braces
 * Unicode support
-* Convert square braces to parentheses, except for braced page number references
