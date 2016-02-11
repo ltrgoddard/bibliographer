@@ -7,7 +7,7 @@ with open(str(sys.argv[1]),"r") as input:
 
 	text = input.read()
 
-scraper = re.compile(r"(\^\[| \(|; |see )([A-Z]|\').{1,100}, (\'.{1,100}\', )?(in )?\*.{1,100}\*.{0,200}(( |\(|\[)\d{4})?(, (p\. |pp\. )([\d-]{1,10})(, (n\. )([0-9]{1,10}))?)?(, (\&|\<|\\<).*?(accessed.*?\d{4}))?((\)|\]|[0-9ivxlcm])(\.\]|\. |; |, quoted))")
+scraper = re.compile(r"(\^\[| \(|; |see )([A-Z]|\').{1,100}, (\'.{1,100}\', )?(in )?\*.{1,100}\*.{0,200}(( |\(|\[)\d{4})?(, (p\. |pp\. )([\d-]{1,10})(, (n\. )([0-9]{1,10}))?)?(, (\&|\<|\\<).*?(accessed.*?\d{4}))?((\)|\]|[0-9ivxlcdm])(\.\]|\. |; |, quoted))")
 
 biblio = []
 
@@ -16,8 +16,9 @@ for citation in re.finditer(scraper, text):
 	note = str(citation.group())[2:-2]
 	note = re.sub(r"(\[|\\\[)(?=[A-Z]|\d)", "(", note)
 	note = re.sub(r"(?<=(, | \()\d{4})\\?\]", ")", note)
-	note = re.sub(r"(\(|\[)(p\. |pp\. )(\d{1,5}|\d{1,5}\-(\-)?\d{1,5})(\)|\])", "", note)
-	note = re.sub(r", (?=\d{1,5}\-(\-)?\d{1,5})", ", pp. ", note)
+	note = re.sub(r"(\(|\[)(p\. |pp\. )([\divxlcdm]{1,10}|[\divxlcdm]{{1,10}\-(\-)?[\divxlcdm]{1,10})(\)|\])", "", note)
+	note = re.sub(r", (?=[\divxlcdm]{1,10}\-(\-)?[\divxlcdm]{1,10})", ", pp. ", note)
+	note = re.sub(r"((?<=\])\)| \))", "", note)
 
 	if note[0] == "\'":
 
