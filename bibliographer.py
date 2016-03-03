@@ -27,17 +27,22 @@ for citation in re.finditer(scraper, text):
 
 		name = re.compile(r"(^| )[A-Za-z\'\-]*(, | and )")
 		surnames = re.search(name, note)
-		surname = surnames.group(0).strip(",")
-		if surname[0] == " ":
 
-			if surname[-5:] == " and ":
+		if surnames != None:
 
-				note = surname[1:-5] + ", " + re.sub(name, " and ", note, 1)
+			surname = surnames.group(0).strip(",")
 
-			else:
+			if  surname[0] == " ":
+		
+				if surname[-5:] == " and ":
 
-				note = surname[1:] + re.sub(name, ", ", note, 1)
-		biblio.append(note + "  ")
+					note = surname[1:-5] + ", " + re.sub(name, " and ", note, 1)
+
+				else:
+
+					note = surname[1:] + re.sub(name, ", ", note, 1)
+			
+				biblio.append(note + "  ")
 
 biblio.sort(key=lambda x: x.strip("\'").lower())
 
